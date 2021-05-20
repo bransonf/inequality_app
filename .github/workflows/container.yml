@@ -1,0 +1,14 @@
+name: Build Docker Images to Github Packages
+on: [push]
+jobs:
+  build-app:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Publish App to Github Packages
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: bransonf/inequality_app/inequality_app
+        username: ${{ github.actor }}
+        password: ${{ secrets.TOKEN }}
+        registry: docker.pkg.github.com
