@@ -6,7 +6,7 @@ MAINTAINER Branson Fox <bransonf@wustl.edu>
 # -
   
 # install R libraries
-RUN R -e "install.packages(c('shiny', 'EnvStats', 'REAT', 'glue'))"
+RUN R -e "install.packages(c('shiny', 'EnvStats', 'REAT', 'glue', 'data.table'))"
 
 # install non-CRAN libraries
 # -

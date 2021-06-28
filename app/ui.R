@@ -18,7 +18,9 @@ shinyUI(fluidPage(
         mainPanel(
             plotOutput("distPlot"),
             plotOutput('lorenzPlot'),
-            plotOutput('atkinsonPlot')
+            plotOutput('atkinsonPlot'),
+            plotOutput('needFunctionPlot'),
+            plotOutput('prioritarianPlot')
         )
     )
 ))

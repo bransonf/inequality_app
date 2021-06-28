@@ -30,6 +30,56 @@ shinyServer(function(input, output) {
         )
     })
     
+    output$needFunctionPlot <- renderPlot({
+        with(
+            Plorenz(y=dist(), plot=TRUE), 
+            plot(cnx, cny, type = 'l', xlab = 'Weight', ylab = 'Resource',
+                 main = 'Cumulative Need Function',
+                 sub = 'Resorces Needed to Achieve Given Level of Equity'
+            )
+        )
+        segments(0,0,1,1,lty=3)
+        with(
+            Plorenz(y=dist(), plot=TRUE), 
+            lines(cnx, cnn, col = 'red')
+        )
+        text(x=0,y=0.6, labels = 'Lorenz', adj = 0)
+        text(x=0,y=0.5, labels = 'Cumulative Need Function', col = 'red', adj = 0)
+    })
+    
+    output$prioritarianPlot <- renderPlot({
+        lor = Plorenz(y=dist(), plot=FALSE)
+        with(
+            Plorenz(y=dist(), plot=TRUE),
+            plot(cnx, cny, type = 'l', xlab = 'Weight', ylab = 'Resource',
+                 main = 'Prioritarian Allocation Function',
+                 # sub = ''
+            )
+        )
+        segments(0,0,1,1,lty=3)
+        with(
+            Pallocate(lor, sum(dist()) * .1, plot=TRUE),
+            lines(cnx, cny, col = 'purple')
+        )
+        with(
+            Pallocate(lor, sum(dist()) * .3, plot=TRUE),
+            lines(cnx, cny, col = 'blue')
+        )
+        with(
+            Pallocate(lor, sum(dist()) * .5, plot=TRUE),
+            lines(cnx, cny, col = 'darkolivegreen')
+        )
+        with(
+            Pallocate(lor, sum(dist()) * 2, plot=TRUE),
+            lines(cnx, cny, col = 'goldenrod3')
+        )
+        text(x=0,y=0.8, labels = '200% of Current', adj = 0, col = 'goldenrod3')
+        text(x=0,y=0.7, labels = '50% of Current', adj = 0, col = 'darkolivegreen')
+        text(x=0,y=0.6, labels = '30% of Current', adj = 0, col = 'blue')
+        text(x=0,y=0.5, labels = '10% of Current', adj = 0, col = 'purple')
+        text(x=0,y=0.4, labels = 'Lorenz', adj = 0)
+    })
+    
     # Text Values
     output$giniVal <- renderText({
         make_text_out('Gini', REAT::gini(dist()))
